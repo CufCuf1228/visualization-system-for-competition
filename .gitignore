@@ -13,14 +13,5 @@ __pycache__/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# apps cache
-apps/__pycache__/
-
-# apis cache
-apps/apis/__pycache__/
-
-# settings cache
-settings/__pycache__/
-
 # 文献
 paper/
