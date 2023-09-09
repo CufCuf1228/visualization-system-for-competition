@@ -21,16 +21,16 @@ def charts(progress_name):
     tech_es_cost = data['节能成本'].tolist() # es: energy reduction ; er_cost: 节能成本
     tech_er_potential = data['减排潜力'].tolist() # er: emission reduction ; er_potential: 减排潜力
     tech_er_cost = data['减排成本'].tolist() # er: emission reduction ; er_cost: 减排成本
-    page = Page(layout= Page.DraggablePageLayout)
+    page = Page()
 
     table = (
         Table(page_title=f"{progress_name}流程技术表格")
         .add(headers=['技术编号','技术名称'], rows=[[i+1] + row.tolist() for i, row in enumerate(pd.DataFrame(data['技术名称']).values)],
-             attributes={"align": "left", "broder": "0", "width": "20%"})
+             attributes={"align": "right", "broder": "0", "width": "22%"})
     )
     print(table)
     bar = (
-        Bar(init_opts=opts.InitOpts(width="80%"))
+        Bar(init_opts=opts.InitOpts(width="77%",height="500%"))
         .add_xaxis(x_axis)
         .add_yaxis('节能潜力', tech_es_potential)
         .add_yaxis('节能成本', tech_es_cost)
@@ -51,7 +51,7 @@ def charts(progress_name):
     value = df_stacked.values.tolist()
 
     heatmap = (
-        HeatMap(init_opts=opts.InitOpts(width="80%"))
+        HeatMap(init_opts=opts.InitOpts(width="77%", height="500%"))
         .add_xaxis(x_axis)
         .add_yaxis('', column, value)
         .set_global_opts(
@@ -59,11 +59,12 @@ def charts(progress_name):
         xaxis_opts=opts.AxisOpts(name="技术编号",axislabel_opts={'interval': 0,'rotate':0}),
         yaxis_opts=opts.AxisOpts(name="节能减排"),
         visualmap_opts=opts.VisualMapOpts(min_=-5, max_=10),  # 设置热力图的坐标范围
-        legend_opts=opts.LegendOpts(pos_left='right'))
+        legend_opts=opts.LegendOpts(pos_left='left'))
     )
     page.add(table)
     page.add(bar)
     page.add(heatmap)
+    # page.render()
     return page.render_embed()
 
 @charts_bp.route('/1', methods=['GET', 'POST'])
