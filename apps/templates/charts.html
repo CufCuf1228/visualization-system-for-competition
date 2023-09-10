@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>钢铁生产流程</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="static/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="static/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="static/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="static/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="navbar-brand-wrapper d-flex justify-content-center">
+        <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+          <a class="navbar-brand brand-logo" href="{{ url_for('index.index') }}"><img src="static/images/logo.jpg"
+              alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="{{ url_for('index.index') }}"><img
+              src="./static/images/logo.jpg" alt="logo" /></a>
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-sort-variant"></span>
+          </button>
+        </div>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center ">
+        <ul class="navbar-nav mr-lg-4 w-100">
+          <span
+            style="display: block; margin: 0 auto; text-align: center; color: black; font-size: 20px; letter-spacing: 4px;">基于多源数据的钢铁生产减排优化研究</span>
+        </ul>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:static/partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index.index') }}">
+              <i class="mdi mdi-home menu-icon"></i>
+              <span class="menu-title">钢铁生产流程</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index.dashboard') }}">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">数据仪表盘</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
+              aria-controls="ui-basic">
+              <i class="mdi mdi-view-headline menu-icon"></i>
+              <span class="menu-title">流程分析</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('charts.charts', progress_name='原料和能源的运输') }}">原料和能源的运输</a>
+                </li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='烧结') }}">烧结</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='焦化') }}">焦化</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='炼铁') }}">炼铁</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='炼钢') }}">炼钢</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='精炼') }}">精炼</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='连铸') }}">连铸</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='热轧') }}">热轧</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='冷轧') }}">冷轧</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='智能化类') }}">智能化类</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ url_for('charts.charts', progress_name='其他类') }}">其他类</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body" id="bar">
+                  <script type="text/javascript">
+                    var bar = echarts.init(document.getElementById('bar'));
+                    bar.setOption({{ mybar | safe }});
+                  </script>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <style>
+                    .table-container {
+                      max-height: 55vh;
+                      overflow-y: scroll;
+                    }
+                  </style>
+                  <div class="table-container">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>技术编号</th>
+                          <th>技术名称</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for key,value in tech_dict%}
+                        <tr class="table-info">
+                          <td>{{ key }}</td>
+                          <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body" id="heatmap">
+                  <script type="text/javascript">
+                    var heatmap = echarts.init(document.getElementById('heatmap'));
+                    heatmap.setOption({{ myheatmap | safe }});
+                  </script>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body" id="pie">
+                  <script type="text/javascript">
+                    var pie = echarts.init(document.getElementById('pie'));
+                    pie.setOption({{ mypie | safe }});
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="static/vendors/base/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="static/vendors/chart.js/Chart.min.js"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="static/js/off-canvas.js"></script>
+  <script src="static/js/hoverable-collapse.js"></script>
+  <script src="static/js/template.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="static/js/chart.js"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>
