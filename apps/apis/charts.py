@@ -166,23 +166,12 @@ def tech_charts():
         scatter = (
             Scatter()
             .set_global_opts(
-                xaxis_opts=opts.AxisOpts(
-                    type_="value", splitline_opts=opts.SplitLineOpts(is_show=True)
-                ),
-                yaxis_opts=opts.AxisOpts(
-                    type_="value",
-                    axistick_opts=opts.AxisTickOpts(is_show=True),
-                    splitline_opts=opts.SplitLineOpts(is_show=True),
-                ),
+                xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=True)),
+                yaxis_opts=opts.AxisOpts(type_="value",axistick_opts=opts.AxisTickOpts(is_show=True),splitline_opts=opts.SplitLineOpts(is_show=True),),
                 tooltip_opts=opts.TooltipOpts(is_show=False),
             )
         )
 
-        print(type(selected_tech_names))
-        print(selected_tech_names)
-        print(selected_tech_er_cost)
-        print(selected_tech_es_cost)
-        
         for i in range(len(selected_tech_names)):
             scatter.add_xaxis([selected_tech_es_cost[i]])
             scatter.add_yaxis(selected_tech_names[i], [selected_tech_er_cost[i]])
