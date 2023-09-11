@@ -3,13 +3,10 @@ from pyecharts import options as opts
 from pyecharts.charts import Bar, HeatMap, Pie, Scatter, Tab
 from pyecharts.commons.utils import JsCode
 import pandas as pd
+from apps.apis.index import read_data, read_tech_details
+
 
 charts_bp = Blueprint('charts', __name__, url_prefix='/')
-
-def read_data(progress_name):
-    file_path = current_app.config["DATA_FILE_PATH"] # 获取数据文件路径
-    data = pd.read_excel(io=file_path, sheet_name=progress_name) # 读取指定流程的数据
-    return data
 
 
 # views 前后端耦合较高
@@ -23,7 +20,7 @@ def charts():
     tech_es_cost = data['节能成本'].tolist() # es: energy reduction ; er_cost: 节能成本
     tech_er_potential = data['减排潜力'].tolist() # er: emission reduction ; er_potential: 减排潜力
     tech_er_cost = data['减排成本'].tolist() # er: emission reduction ; er_cost: 减排成本
-    # page = Page()
+
 
     bar = (
         Bar(init_opts=opts.InitOpts(width="100%"))
@@ -56,17 +53,14 @@ def charts():
         legend_opts=opts.LegendOpts(pos_left='left'),
         datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")])
     )
-    # page.add(table)
-    # page.add(bar)
-    # page.add(heatmap)
-    # page.render()
+
 
     pie = (
         Pie(init_opts=opts.InitOpts(width="100%"))
         .add(
             series_name="节能潜力",
             data_pair=[list(z) for z in zip(x_axis, tech_es_potential)],
-            radius=["10%", "20%"],
+            radius=["10%", "15%"],
             center=["20%", "30%"],
             rosetype="radius",
             label_opts=opts.LabelOpts(is_show=False, position="center"),
@@ -74,14 +68,14 @@ def charts():
         .add(
             series_name="节能成本",
             data_pair=[list(z) for z in zip(x_axis, tech_es_cost)],
-            radius=["10%", "20%"],
+            radius=["10%", "15%"],
             center=["55%", "30%"],
             rosetype="area",
         )
         .add(
             series_name="减排潜力",
             data_pair=[list(z) for z in zip(x_axis, tech_er_potential)],
-            radius=["10%", "20%"],
+            radius=["10%", "15%"],
             center=["20%", "70%"],
             rosetype="radius",
             label_opts=opts.LabelOpts(is_show=False, position="center"),
@@ -89,7 +83,7 @@ def charts():
         .add(
             series_name="减排成本",
             data_pair=[list(z) for z in zip(x_axis, tech_er_cost)],
-            radius=["10%", "20%"],
+            radius=["10%", "15%"],
             center=["55%", "70%"],
             rosetype="area",
         )
@@ -101,10 +95,12 @@ def charts():
     )
 
     tech_dict = list(zip(x_axis, tech_name))
+    tech_details = read_tech_details()
     return render_template('charts.html', mybar=bar.render_embed()[:-2],
                             myheatmap=heatmap.render_embed()[:-2],
                             mypie=pie.render_embed()[:-2],
-                            tech_dict=tech_dict
+                            tech_dict=tech_dict,
+                            tech_details=tech_details
                             )
 
 @charts_bp.route('/tech_charts', methods=['GET','POST'])
@@ -112,13 +108,14 @@ def tech_charts():
 
     data = read_data('总数据')
     tech_names = data['技术名称'].tolist()
+    tech_details = read_tech_details()
 
     if request.method == 'GET':
-        return render_template('tech_charts.html', tech_names=tech_names)
+        return render_template('tech_charts.html', tech_names=tech_names, tech_details=tech_details)
     
     if request.method == 'POST':
         if not request.form.getlist('tech_name'):
-            return render_template('tech_charts.html', tech_names=tech_names)
+            return render_template('tech_charts.html', tech_names=tech_names, tech_details=tech_details)
         selected_tech_names = request.form.getlist('tech_name')
         selected_data = data[data['技术名称'].isin(selected_tech_names)]
 
@@ -167,7 +164,7 @@ def tech_charts():
             Scatter(init_opts=opts.InitOpts(width="100%", height="700%"))
             .set_global_opts(
                 xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=True)),
-                yaxis_opts=opts.AxisOpts(type_="value",axistick_opts=opts.AxisTickOpts(is_show=True),splitline_opts=opts.SplitLineOpts(is_show=True),),
+                yaxis_opts=opts.AxisOpts(type_="value", axistick_opts=opts.AxisTickOpts(is_show=True),splitline_opts=opts.SplitLineOpts(is_show=True),),
                 tooltip_opts=opts.TooltipOpts(is_show=False),
             )
         )
@@ -181,4 +178,4 @@ def tech_charts():
         Tab.add(tab, pie, '潜力饼图')
         Tab.add(tab, scatter, '成本散点图')
         return render_template('tech_charts.html', mytab=tab.render_embed()[:-2],
-                            tech_names=tech_names)
+                            tech_names=tech_names, tech_details=tech_details)
