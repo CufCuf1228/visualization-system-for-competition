@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+apps/__pycache__/
 *.py[cod]
 *$py.class
 apps/apis/__pycache__/
@@ -16,9 +16,6 @@ pip-delete-this-directory.txt
 
 # 文献
 paper/
-
-# 数据
-data_json/
 
 # 虚拟环境
 ENV/

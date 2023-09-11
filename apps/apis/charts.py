@@ -135,7 +135,7 @@ def tech_charts():
             .add_yaxis('减排潜力', selected_tech_er_potential)
             .add_yaxis('减排成本', selected_tech_er_cost)
             .set_global_opts(
-                title_opts=opts.TitleOpts(title="技术条形图",pos_left="center"),
+                title_opts=opts.TitleOpts(title="技术条形图",pos_left="center", pos_top="5%"),
                 yaxis_opts=opts.AxisOpts(name='节能减排',axislabel_opts={"font_weight": "bold"}),
                 xaxis_opts=opts.AxisOpts(name='技术编号',axislabel_opts={'interval': 0,'rotate':0}),
                 datazoom_opts=[opts.DataZoomOpts(type_="slider"),opts.DataZoomOpts(type_="inside")],
@@ -159,12 +159,12 @@ def tech_charts():
             label_opts=opts.LabelOpts(is_show=False, position="center"),
         )
         .set_global_opts(
-            title_opts=opts.TitleOpts(title="技术饼图", pos_left="center", pos_top="5%"),
+            title_opts=opts.TitleOpts(title="潜力饼图", pos_left="center", pos_top="5%"),
             legend_opts=opts.LegendOpts(pos_right='20%', orient='vertical', pos_top="center", item_width=25, item_height=18))
         )
         
         scatter = (
-            Scatter()
+            Scatter(init_opts=opts.InitOpts(width="100%", height="700%"))
             .set_global_opts(
                 xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=True)),
                 yaxis_opts=opts.AxisOpts(type_="value",axistick_opts=opts.AxisTickOpts(is_show=True),splitline_opts=opts.SplitLineOpts(is_show=True),),
