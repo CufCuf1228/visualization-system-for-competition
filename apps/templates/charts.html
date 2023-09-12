@@ -206,36 +206,47 @@
               </div>
             </div>
           </div>
+          <style>
+            .popup {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                cursor: move;
+            }
+        </style>
           <script>
             window.onload = function () {
               // 获取表格的所有行
               var rows = document.querySelectorAll('.table-info');
               // 为每一行添加点击事件监听器
               rows.forEach(function (row) {
-                // 鼠标停留在一条数据时，该条数据会变成黄色，而且鼠标光标会变为手指
-                row.addEventListener('mouseover', function () {
+              var cell = row.querySelector('td:nth-child(2)')
+              // 鼠标停留在一条数据时的第一个单元格，该条数据会变成黄色，而且鼠标光标会变为手指
+              cell.addEventListener('mouseover', function () {
                   this.style.backgroundColor = 'yellow';
                   this.style.cursor = 'pointer';
-                });
-                // 鼠标离开时，恢复原样
-                row.addEventListener('mouseout', function () {
+              });
+              // 鼠标离开时，恢复原样
+              cell.addEventListener('mouseout', function () {
                   this.style.backgroundColor = '';
                   this.style.cursor = '';
-                });
-                row.addEventListener('click', function () {
-                  // 获取行中的所有单元格
-                  var cells = this.querySelectorAll('td');
-                  // 创建一个包含所有单元格信息的字符串
+              });
+              // 获取改行的第一个单元格
+              cell.addEventListener('click', function () {
                   var info = '';
-                  var cell = cells[1]; // 直接访问第一个元素
                   info += '<h2>' + cell.innerText + '</h2>'; // 第一行数据字号调大
                   var tech_details = JSON.parse('{{ tech_details|tojson }}');
                   console.log(typeof (tech_details)) // object 其元素为Array(2)
                   for (var i = 0; i < tech_details.length; i++) {
-                    console.log(tech_details[i][0]) // 打印每个子数组的第一个元素
-                    if (tech_details[i][0] == cell.innerText) { // 比较cell的文本和子数组的第一个元素
-                      info += '<p>' + tech_details[i][1] + '</p>'; // 如果相等，添加子数组的第二个元素到info中
-                    }
+                      console.log(tech_details[i][0]) // 打印每个子数组的第一个元素
+                      if (tech_details[i][0] == cell.innerText) { // 比较cell的文本和子数组的第一个元素
+                          info += '<p>' + tech_details[i][1] + '</p>'; // 如果相等，添加子数组的第二个元素到info中
+                      }
                   }
                   // 显示弹窗
                   var popup = document.createElement('div');
@@ -270,6 +281,27 @@
 
                   // 将关闭按钮添加到弹窗中
                   popup.appendChild(closeButton);
+                  // 添加拖动功能
+                  var isDragging = false;
+                  var offsetX = 0;
+                  var offsetY = 0;
+
+                  popup.addEventListener('mousedown', function (e) {
+                      isDragging = true;
+                      offsetX = e.clientX - popup.offsetLeft;
+                      offsetY = e.clientY - popup.offsetTop;
+                  });
+
+                  document.addEventListener('mousemove', function (e) {
+                      if (isDragging) {
+                          popup.style.left = (e.clientX - offsetX) + 'px';
+                          popup.style.top = (e.clientY - offsetY) + 'px';
+                      }
+                  });
+
+                    document.addEventListener('mouseup', function () {
+                        isDragging = false;
+                    });
 
                   document.body.appendChild(popup);
                 });
