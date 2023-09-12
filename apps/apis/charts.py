@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, current_app 
+from flask import Blueprint, render_template, request, current_app
 from pyecharts import options as opts
 from pyecharts.charts import Bar, HeatMap, Pie, Scatter, Tab
 from pyecharts.commons.utils import JsCode
@@ -90,8 +90,8 @@ def charts():
         .set_global_opts(title_opts=opts.TitleOpts(title=f"{progress_name}流程技术玫瑰图",pos_left="center"),
                             legend_opts=opts.LegendOpts(pos_left='right', orient='vertical'),
                             )
-                            
-        
+
+
     )
 
     tech_dict = list(zip(x_axis, tech_name))
@@ -112,7 +112,7 @@ def tech_charts():
 
     if request.method == 'GET':
         return render_template('tech_charts.html', tech_names=tech_names, tech_details=tech_details)
-    
+
     if request.method == 'POST':
         if not request.form.getlist('tech_name'):
             return render_template('tech_charts.html', tech_names=tech_names, tech_details=tech_details)
@@ -123,6 +123,12 @@ def tech_charts():
         selected_tech_es_cost = selected_data['节能成本'].tolist()
         selected_tech_er_potential = selected_data['减排潜力'].tolist()
         selected_tech_er_cost = selected_data['减排成本'].tolist()
+        selected_tech_names.append('总计')
+        selected_tech_es_potential.append(sum(selected_tech_es_potential))
+        selected_tech_es_cost.append(sum(selected_tech_es_cost))
+        selected_tech_er_potential.append(sum(selected_tech_er_potential))
+        selected_tech_er_cost.append(sum(selected_tech_er_cost))
+
 
         bar = (
             Bar(init_opts=opts.InitOpts(width="100%", height="700%"))
@@ -138,7 +144,7 @@ def tech_charts():
                 datazoom_opts=[opts.DataZoomOpts(type_="slider"),opts.DataZoomOpts(type_="inside")],
                 legend_opts=opts.LegendOpts(pos_left='right', orient='vertical',item_width=10, item_height=15))
         )
-        
+
         pie = (
         Pie(init_opts=opts.InitOpts(width="100%", height="700%"))
         .add(
@@ -159,7 +165,7 @@ def tech_charts():
             title_opts=opts.TitleOpts(title="潜力饼图", pos_left="center", pos_top="5%"),
             legend_opts=opts.LegendOpts(pos_right='20%', orient='vertical', pos_top="center", item_width=25, item_height=18))
         )
-        
+
         scatter = (
             Scatter(init_opts=opts.InitOpts(width="100%", height="700%"))
             .set_global_opts(
