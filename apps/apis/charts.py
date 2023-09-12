@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, current_app
 from pyecharts import options as opts
 from pyecharts.charts import Bar, HeatMap, Pie, Scatter, Tab
-from pyecharts.commons.utils import JsCode
+from pyecharts.components import Table
 import pandas as pd
 from apps.apis.index import read_data, read_tech_details
 
@@ -123,11 +123,6 @@ def tech_charts():
         selected_tech_es_cost = selected_data['节能成本'].tolist()
         selected_tech_er_potential = selected_data['减排潜力'].tolist()
         selected_tech_er_cost = selected_data['减排成本'].tolist()
-        selected_tech_names.append('总计')
-        selected_tech_es_potential.append(sum(selected_tech_es_potential))
-        selected_tech_es_cost.append(sum(selected_tech_es_cost))
-        selected_tech_er_potential.append(sum(selected_tech_er_potential))
-        selected_tech_er_cost.append(sum(selected_tech_er_cost))
 
 
         bar = (
@@ -174,14 +169,27 @@ def tech_charts():
                 tooltip_opts=opts.TooltipOpts(is_show=False),
             )
         )
-
         for i in range(len(selected_tech_names)):
             scatter.add_xaxis([selected_tech_es_cost[i]])
             scatter.add_yaxis(selected_tech_names[i], [selected_tech_er_cost[i]])
+
+        table = Table()
+        headers = ["", "节能潜力", "节能成本", "减排潜力", "减排成本"]
+        rows = [['总计', round(sum(selected_tech_es_potential),2),
+                round(sum(selected_tech_es_cost),2),
+                round(sum(selected_tech_er_potential),2),
+                round(sum(selected_tech_er_cost),2)]]
+        table.add(headers, rows,attributes={
+        "class": "fl-table",
+		"align": "center",
+		"border": True,
+		"style": "width:70vh; height:20vh;"
+	    })
 
         tab = Tab()
         Tab.add(tab, bar, '条形图')
         Tab.add(tab, pie, '潜力饼图')
         Tab.add(tab, scatter, '成本散点图')
+        Tab.add(tab, table, '总计表')
         return render_template('tech_charts.html', mytab=tab.render_embed()[:-2],
                             tech_names=tech_names, tech_details=tech_details)
