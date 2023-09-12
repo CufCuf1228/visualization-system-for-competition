@@ -22,6 +22,7 @@ index 页面：钢铁生产流程
 1. 电脑需要安装python
 2. 下载源码后，切换到与manage.py同级的目录
 3. 创建虚拟环境（命令是 python -m venv myenv）
+4. 激活虚拟环境（命令是 myenv\Scripts\activate）  （实际上是找到虚拟环境名的文件夹下的Scripts\activate，激活虚拟环境）
 4. 安装需求的包（命令是 pip install -r requirements.txt）
 5. 配置数据文件
    1. 在与manage.py同级的目录下创建文件夹paper
