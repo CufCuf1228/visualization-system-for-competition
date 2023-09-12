@@ -208,16 +208,18 @@
           </div>
           <style>
             .popup {
-                position: fixed;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                cursor: move;
-            }
+                    position: fixed;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                    cursor: move;
+                    width: 30vw; /* 设置弹窗宽度为视口宽度的30% */
+                    height: 20vh; /* 设置弹窗高度为视口高度的20% */
+                }
         </style>
           <script>
             window.onload = function () {
@@ -250,6 +252,7 @@
                   }
                   // 显示弹窗
                   var popup = document.createElement('div');
+                  popup.className = 'popup';
                   popup.innerHTML = info;
                   popup.style.position = 'fixed';
                   popup.style.left = '50%';
@@ -281,6 +284,7 @@
 
                   // 将关闭按钮添加到弹窗中
                   popup.appendChild(closeButton);
+
                   // 添加拖动功能
                   var isDragging = false;
                   var offsetX = 0;
@@ -299,9 +303,9 @@
                       }
                   });
 
-                    document.addEventListener('mouseup', function () {
-                        isDragging = false;
-                    });
+                  document.addEventListener('mouseup', function () {
+                      isDragging = false;
+                  });
 
                   document.body.appendChild(popup);
                 });
