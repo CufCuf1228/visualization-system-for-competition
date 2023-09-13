@@ -130,8 +130,7 @@ def tech_charts():
         sorted_tech_es_cost = sorted_selected_data['节能成本'].tolist()
         cumulative_sum_sorted_tech_es_potential = np.cumsum(sorted_tech_es_potential)
         cumulative_sum_sorted_tech_es_potential = [round(i, 2) for i in cumulative_sum_sorted_tech_es_potential]
-        print(cumulative_sum_sorted_tech_es_potential)
-        print(sorted_tech_es_cost)
+  
         grid_bar = (
             Bar(init_opts=opts.InitOpts(width="100%"))
             .add_xaxis(sorted_tech_names)
@@ -149,7 +148,7 @@ def tech_charts():
             )
             .set_global_opts(
                 title_opts=opts.TitleOpts(title="CSC曲线",pos_left="center", pos_top="5%"),
-                xaxis_opts=opts.AxisOpts(name='技术名称',axislabel_opts={'show':False}),
+                xaxis_opts=opts.AxisOpts(name='',axislabel_opts={'show':False}),
                 yaxis_opts=opts.AxisOpts(name='节能成本',axislabel_opts={"font_weight": "bold", "formatter":"{value} 元/t"},
                                          min_=round(min(sorted_tech_es_cost)-0.5),
                                          max_=round(abs(min(sorted_tech_es_cost))+0.5) if max(sorted_tech_es_cost) < 0 else round(2*max(sorted_tech_es_cost))),
