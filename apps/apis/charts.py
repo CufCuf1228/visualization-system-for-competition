@@ -53,7 +53,6 @@ def charts():
         datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")])
     )
 
-
     pie = (
         Pie(init_opts=opts.InitOpts(width="100%"))
         .add(
@@ -89,8 +88,6 @@ def charts():
         .set_global_opts(title_opts=opts.TitleOpts(title=f"{progress_name}流程技术玫瑰图",pos_left="center"),
                             legend_opts=opts.LegendOpts(pos_left='right', orient='vertical'),
                             )
-
-
     )
 
     tech_dict = list(zip(x_axis, tech_name))
@@ -236,7 +233,6 @@ def tech_charts():
                  f"{sum_selected_tech_er_cost}" + "  元/t"]
         rows.append(total_row)
 
-  
         for select_tech_name in selected_tech_names:
             selected_row = data[data['技术名称'] == select_tech_name].values[0]
             selected_row[1] = f"{selected_row[1]}" + " kg/t"
