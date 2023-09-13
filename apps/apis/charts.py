@@ -21,7 +21,6 @@ def charts():
     tech_er_potential = data['减排潜力'].tolist() # er: emission reduction ; er_potential: 减排潜力
     tech_er_cost = data['减排成本'].tolist() # er: emission reduction ; er_cost: 减排成本
 
-
     bar = (
         Bar(init_opts=opts.InitOpts(width="100%"))
         .add_xaxis(x_axis)
