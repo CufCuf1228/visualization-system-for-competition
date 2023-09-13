@@ -13,6 +13,7 @@ def read_data(progress_name):
     data = pd.read_excel(io=file_path, sheet_name=progress_name) # 读取指定流程的数据
     return data
 
+
 def read_tech_details():
     data_details = read_data('技术详情')
     tech_name_details = data_details['技术名称'].tolist()
