@@ -7,7 +7,6 @@ from openpyxl import load_workbook
 
 index_bp = Blueprint('index', __name__, url_prefix='/')
 
-
 def read_data(progress_name):
     file_path = current_app.config["DATA_FILE_PATH"] # 获取数据文件路径
     data = pd.read_excel(io=file_path, sheet_name=progress_name) # 读取指定流程的数据
