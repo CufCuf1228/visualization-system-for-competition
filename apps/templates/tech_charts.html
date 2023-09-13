@@ -209,28 +209,70 @@
                         </div>
                         <div class="col-lg-6 stretch-card">
                             <div class="card" id="tab">
-                                <script type="text/javascript">
-                                    var tab = echarts.init(document.getElementById('tab'));
-                                    tab.setOption({{ mytab | safe }});
-                                </script>
+                                <style>
+                                    .my-table {
+                                        border-collapse: collapse;
+                                        /* 合并边框 */
+                                        width: 50vh;
+                                    }
+
+                                    .my-table th,
+                                    .my-table td {
+                                        border: 1px solid #ddd;
+                                        /* 设置内边框和外边框 */
+                                        padding: 8px;
+                                        text-align: center;
+                                        /* 设置数据居中 */
+                                    }
+
+                                    .my-table th {
+                                        background-color: #ffffff;
+                                        /* 设置表头背景色为白色 */
+                                    }
+
+                                    .my-table tr:nth-child(n+1) {
+                                        background-color: #d0e7f9;
+                                        /* 设置其他行的背景色为更浅的蓝色 */
+                                    }
+
+                                    .my-table td:first-child,
+                                    .my-table th:first-child {
+                                        width: 15vh;
+                                        /* 设置第一列的宽度 */
+                                    }
+
+                                    .table-container2 {
+                                        overflow: auto;
+                                        height: 85vh;
+                                        width: 80vh;
+                                    }
+                                </style>
+                                <div class="table-container2">
+                                    <script type="text/javascript">
+                                        var tab = echarts.init(document.getElementById('tab'));
+                                        tab.setOption({{ mytab | safe }});
+                                    </script>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <style>
                     .popup {
-                            position: fixed;
-                            left: 50%;
-                            top: 50%;
-                            transform: translate(-50%, -50%);
-                            background-color: #fff;
-                            padding: 20px;
-                            border-radius: 10px;
-                            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                            cursor: move;
-                            width: 30vw; /* 设置弹窗宽度为视口宽度的30% */
-                            height: 20vh; /* 设置弹窗高度为视口高度的20% */
-                        }
+                        position: fixed;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: #fff;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                        cursor: move;
+                        width: 30vw;
+                        /* 设置弹窗宽度为视口宽度的30% */
+                        height: 20vh;
+                        /* 设置弹窗高度为视口高度的20% */
+                    }
                 </style>
                 <script>
                     window.onload = function () {
