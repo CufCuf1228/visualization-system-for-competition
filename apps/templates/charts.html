@@ -50,18 +50,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('index.dashboard') }}">
-              <i class="mdi mdi-chart-pie menu-icon"></i>
-              <span class="menu-title">数据仪表盘</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('charts.tech_charts') }}">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">技术展示</span>
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
               aria-controls="ui-basic">
               <i class="mdi mdi-view-headline menu-icon"></i>
@@ -136,6 +124,18 @@
               </ul>
             </div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index.dashboard') }}">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">数据仪表盘</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('charts.tech_charts') }}">
+              <i class="mdi mdi-grid-large menu-icon"></i>
+              <span class="menu-title">技术展示</span>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- partial -->
@@ -206,6 +206,7 @@
               </div>
             </div>
           </div>
+          <!--  表格监视器 弹窗 -->
           <style>
             .popup {
                     position: fixed;
@@ -220,7 +221,7 @@
                     width: 30vw; /* 设置弹窗宽度为视口宽度的30% */
                     height: 20vh; /* 设置弹窗高度为视口高度的20% */
                 }
-        </style>
+          </style>
           <script>
             window.onload = function () {
               // 获取表格的所有行
