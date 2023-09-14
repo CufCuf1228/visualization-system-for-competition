@@ -51,18 +51,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index.dashboard') }}">
-                            <i class="mdi mdi-chart-pie menu-icon"></i>
-                            <span class="menu-title">数据仪表盘</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('charts.tech_charts') }}">
-                            <i class="mdi mdi-grid-large menu-icon"></i>
-                            <span class="menu-title">技术展示</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
                             aria-controls="ui-basic">
                             <i class="mdi mdi-view-headline menu-icon"></i>
@@ -137,6 +125,18 @@
                                         href="{{ url_for('charts.charts', progress_name='其他类') }}">其他类</a></li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index.dashboard') }}">
+                            <i class="mdi mdi-chart-pie menu-icon"></i>
+                            <span class="menu-title">数据仪表盘</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('charts.tech_charts') }}">
+                            <i class="mdi mdi-grid-large menu-icon"></i>
+                            <span class="menu-title">技术展示</span>
+                        </a>
                     </li>
                 </ul>
             </nav>

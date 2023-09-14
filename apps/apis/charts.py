@@ -112,7 +112,7 @@ def tech_charts():
     if request.method == 'POST':
         if not request.form.getlist('tech_name'):
             return render_template('tech_charts.html', tech_names=tech_names, tech_details=tech_details)
-        
+
         selected_tech_names = request.form.getlist('tech_name')
         selected_data = data[data['技术名称'].isin(selected_tech_names)]
         selected_tech_es_potential = selected_data['节能潜力'].tolist()
@@ -126,7 +126,7 @@ def tech_charts():
         sorted_tech_es_cost = sorted_selected_data['节能成本'].tolist()
         cumulative_sum_sorted_tech_es_potential = np.cumsum(sorted_tech_es_potential)
         cumulative_sum_sorted_tech_es_potential = [round(i, 2) for i in cumulative_sum_sorted_tech_es_potential]
-  
+
         grid_bar = (
             Bar(init_opts=opts.InitOpts(width="100%"))
             .add_xaxis(sorted_tech_names)
@@ -147,7 +147,7 @@ def tech_charts():
                 xaxis_opts=opts.AxisOpts(name='',axislabel_opts={'show':False}),
                 yaxis_opts=opts.AxisOpts(name='节能成本',axislabel_opts={"font_weight": "bold", "formatter":"{value} 元/t"},
                                          min_=round(min(sorted_tech_es_cost)-0.5),
-                                         max_=round(abs(min(sorted_tech_es_cost))+0.5) if max(sorted_tech_es_cost) < 0 else round(2*max(sorted_tech_es_cost))),
+                                         max_=round(abs(min(sorted_tech_es_cost))+0.5) if min(sorted_tech_es_cost) < abs(max(sorted_tech_es_cost)) else round(2*max(sorted_tech_es_cost))),
                 datazoom_opts=[opts.DataZoomOpts(type_="slider"),opts.DataZoomOpts(type_="inside")]
             )
         )
