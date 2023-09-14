@@ -215,7 +215,7 @@ def tech_charts():
             scatter.add_yaxis(selected_tech_names[i], [selected_tech_er_cost[i]])
 
         table = Table()
-        headers = ["", "节能潜力\n(标煤/吨钢)", "节能成本\n(元/吨钢)或(元/标煤)", "减排潜力\n(标碳/吨钢)", "减排成本\n(元/吨钢)或(元/标碳)"]
+        headers = ["", "节能潜力\n(标煤/吨钢)", "减排潜力\n(标碳/吨钢)","节能成本\n(元/吨钢)或(元/标煤)",  "减排成本\n(元/吨钢)或(元/标碳)"]
         rows = []
         sum_selected_tech_es_potential = round(sum(selected_tech_es_potential), 2)
         sum_selected_tech_es_cost = 0
@@ -228,16 +228,16 @@ def tech_charts():
             sum_selected_tech_er_cost += selected_tech_er_potential[i] * selected_tech_er_cost[i]
         sum_selected_tech_er_cost = round(sum_selected_tech_er_cost, 2)
         total_row = ['总计', f"{sum_selected_tech_es_potential}" + "  kg/t",
-                 f"{sum_selected_tech_es_cost}" + "  元/t",
                  f"{sum_selected_tech_er_potential}" + "  kg/t",
+                 f"{sum_selected_tech_es_cost}" + "  元/t",
                  f"{sum_selected_tech_er_cost}" + "  元/t"]
         rows.append(total_row)
 
         for select_tech_name in selected_tech_names:
             selected_row = data[data['技术名称'] == select_tech_name].values[0]
             selected_row[1] = f"{selected_row[1]}" + " kg/t"
-            selected_row[2] = f"{selected_row[2]}" + " 元/kg"
-            selected_row[3] = f"{selected_row[3]}" + " kg/t"
+            selected_row[2] = f"{selected_row[2]}" + " kg/t"
+            selected_row[3] = f"{selected_row[3]}" + " 元/kg"
             selected_row[4] = f"{selected_row[4]}" + " 元/kg"
             rows.append(selected_row)
 
