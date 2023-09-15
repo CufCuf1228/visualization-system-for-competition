@@ -46,7 +46,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('index.index') }}">
               <i class="mdi mdi-home menu-icon"></i>
-              <span class="menu-title">钢铁生产流程</span>
+              <span class="menu-title">首页</span>
             </a>
           </li>
           <li class="nav-item">
@@ -209,18 +209,20 @@
           <!--  表格监视器 弹窗 -->
           <style>
             .popup {
-                    position: fixed;
-                    left: 50%;
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: #fff;
-                    padding: 20px;
-                    border-radius: 10px;
-                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                    cursor: move;
-                    width: 30vw; /* 设置弹窗宽度为视口宽度的30% */
-                    height: 20vh; /* 设置弹窗高度为视口高度的20% */
-                }
+              position: fixed;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              background-color: #fff;
+              padding: 20px;
+              border-radius: 10px;
+              box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+              cursor: move;
+              width: 30vw;
+              /* 设置弹窗宽度为视口宽度的30% */
+              height: 20vh;
+              /* 设置弹窗高度为视口高度的20% */
+            }
           </style>
           <script>
             window.onload = function () {
@@ -228,28 +230,28 @@
               var rows = document.querySelectorAll('.table-info');
               // 为每一行添加点击事件监听器
               rows.forEach(function (row) {
-              var cell = row.querySelector('td:nth-child(2)')
-              // 鼠标停留在一条数据时的第一个单元格，该条数据会变成黄色，而且鼠标光标会变为手指
-              cell.addEventListener('mouseover', function () {
+                var cell = row.querySelector('td:nth-child(2)')
+                // 鼠标停留在一条数据时的第一个单元格，该条数据会变成黄色，而且鼠标光标会变为手指
+                cell.addEventListener('mouseover', function () {
                   this.style.backgroundColor = 'yellow';
                   this.style.cursor = 'pointer';
-              });
-              // 鼠标离开时，恢复原样
-              cell.addEventListener('mouseout', function () {
+                });
+                // 鼠标离开时，恢复原样
+                cell.addEventListener('mouseout', function () {
                   this.style.backgroundColor = '';
                   this.style.cursor = '';
-              });
-              // 获取改行的第一个单元格
-              cell.addEventListener('click', function () {
+                });
+                // 获取改行的第一个单元格
+                cell.addEventListener('click', function () {
                   var info = '';
                   info += '<h2>' + cell.innerText + '</h2>'; // 第一行数据字号调大
                   var tech_details = JSON.parse('{{ tech_details|tojson }}');
                   console.log(typeof (tech_details)) // object 其元素为Array(2)
                   for (var i = 0; i < tech_details.length; i++) {
-                      console.log(tech_details[i][0]) // 打印每个子数组的第一个元素
-                      if (tech_details[i][0] == cell.innerText) { // 比较cell的文本和子数组的第一个元素
-                          info += '<p>' + tech_details[i][1] + '</p>'; // 如果相等，添加子数组的第二个元素到info中
-                      }
+                    console.log(tech_details[i][0]) // 打印每个子数组的第一个元素
+                    if (tech_details[i][0] == cell.innerText) { // 比较cell的文本和子数组的第一个元素
+                      info += '<p>' + tech_details[i][1] + '</p>'; // 如果相等，添加子数组的第二个元素到info中
+                    }
                   }
                   // 显示弹窗
                   var popup = document.createElement('div');
@@ -292,20 +294,20 @@
                   var offsetY = 0;
 
                   popup.addEventListener('mousedown', function (e) {
-                      isDragging = true;
-                      offsetX = e.clientX - popup.offsetLeft;
-                      offsetY = e.clientY - popup.offsetTop;
+                    isDragging = true;
+                    offsetX = e.clientX - popup.offsetLeft;
+                    offsetY = e.clientY - popup.offsetTop;
                   });
 
                   document.addEventListener('mousemove', function (e) {
-                      if (isDragging) {
-                          popup.style.left = (e.clientX - offsetX) + 'px';
-                          popup.style.top = (e.clientY - offsetY) + 'px';
-                      }
+                    if (isDragging) {
+                      popup.style.left = (e.clientX - offsetX) + 'px';
+                      popup.style.top = (e.clientY - offsetY) + 'px';
+                    }
                   });
 
                   document.addEventListener('mouseup', function () {
-                      isDragging = false;
+                    isDragging = false;
                   });
 
                   document.body.appendChild(popup);
