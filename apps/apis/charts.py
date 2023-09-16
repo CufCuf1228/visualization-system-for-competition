@@ -241,7 +241,6 @@ def tech_charts():
         "class": "my-table",
 		"align": "center",
 		"border": False,
-		"style": "width:77vh; height:50vh;"
 	    })
 
         tab = Tab()
