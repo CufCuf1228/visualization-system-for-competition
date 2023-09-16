@@ -199,19 +199,15 @@ def tech_charts():
         scatter = (
             Scatter(init_opts=opts.InitOpts(width="950%", height="700%"))
             .set_global_opts(
-                title_opts=opts.TitleOpts(
-                    subtitle="横轴表示节能成本\n纵轴表示减排成本",
-                    item_gap= 80
-                ),
-                xaxis_opts=opts.AxisOpts(type_="value", splitline_opts=opts.SplitLineOpts(is_show=True), name_location="end",
-                                         min_=round(min(selected_tech_es_cost)-0.2,1), max_=round(max(selected_tech_es_cost)+0.2,1)),
-                yaxis_opts=opts.AxisOpts( type_="value", splitline_opts=opts.SplitLineOpts(is_show=True), name_location="end",
+                xaxis_opts=opts.AxisOpts(name="减排潜力", type_="value", splitline_opts=opts.SplitLineOpts(is_show=True), name_location="end",
+                                         min_=0, max_=round(max(selected_tech_er_potential)+10)),
+                yaxis_opts=opts.AxisOpts(name="减排成本", type_="value", splitline_opts=opts.SplitLineOpts(is_show=True), name_location="end",
                                          min_=round(min(selected_tech_er_cost)-0.1,1), max_=round(max(selected_tech_er_cost)+0.2,1)),
                 tooltip_opts=opts.TooltipOpts(is_show=False),
             )
-        )
+            )
         for i in range(len(selected_tech_names)):
-            scatter.add_xaxis([selected_tech_es_cost[i]])
+            scatter.add_xaxis([selected_tech_er_potential[i]])
             scatter.add_yaxis(selected_tech_names[i], [selected_tech_er_cost[i]])
 
         table = Table()
@@ -252,7 +248,7 @@ def tech_charts():
         Tab.add(tab, grid, 'CSC曲线')
         Tab.add(tab, bar, '条形图')
         Tab.add(tab, pie, '潜力饼图')
-        Tab.add(tab, scatter, '成本散点图')
+        Tab.add(tab, scatter, '减排散点图')
         Tab.add(tab, table, '总计表')
 
         return render_template('tech_charts.html', mytab=tab.render_embed()[:-2],
