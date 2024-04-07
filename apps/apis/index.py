@@ -20,18 +20,16 @@ def read_tech_details():
     tech_details = list(zip(tech_name_details, tech_details))
     return tech_details
 
-
 # view 前后端耦合较高
 @index_bp.route('/')
 def index():
     return render_template('index.html')
 
-
 @index_bp.route('/dashboard')
 def dashboard():
     file_path = current_app.config["DATA_FILE_PATH"] # 获取数据文件路径
     wb = load_workbook(file_path)
-    sheet_names = wb.sheetnames
+    sheet_names = wb.sheetnames[:-3] # 排除后三个拿来做预测的表单
     tech_nums = []
 
     progress_names = sheet_names[2:]

@@ -4,7 +4,7 @@ from pyecharts.charts import Line, Bar, HeatMap, Pie, Scatter, Grid, Tab
 from pyecharts.components import Table
 from apps.apis.index import read_data, read_tech_details
 import numpy as np
-
+import math
 
 charts_bp = Blueprint('charts', __name__, url_prefix='/')
 
@@ -241,7 +241,7 @@ def tech_charts():
         "class": "my-table",
 		"align": "center",
 		"border": False,
-		"style": "width:77vh; height:50vh;"
+		"style": "width:100%;"
 	    })
 
         tab = Tab()
@@ -253,3 +253,81 @@ def tech_charts():
 
         return render_template('tech_charts.html', mytab=tab.render_embed()[:-2],
                             tech_names=tech_names, tech_details=tech_details)
+    
+@charts_bp.route('/CO2_pre', methods=['GET','POST'])
+def CO2_pre():
+    data = read_data('技术普及率')
+    tech_names = data['技术名称'].tolist()
+    tech_details = read_tech_details()
+    CO2_emmission_data = read_data('碳排放预测')
+
+    final_production = CO2_emmission_data['最终产量'].tolist()
+    blast_furnace_percent = CO2_emmission_data['高炉占比'].tolist()
+    blast_furnace_energy_cost = 569
+    elc_furnace_percent = CO2_emmission_data['电炉占比'].tolist()
+    elc_furnace_energy_cost = 127.01
+    energy_cost_to_CO2_emmission = 2.77
+
+    BAU_avg_steel_energy_cost = 468.69
+    BAU_total_CO2_emmission = [i * BAU_avg_steel_energy_cost * energy_cost_to_CO2_emmission for i in final_production]
+    
+    PS_total_CO2_emmission = []
+    for i in range(len(final_production)):
+        PS_CO2_emmission = (blast_furnace_percent[i] * blast_furnace_energy_cost  + elc_furnace_percent[i] * elc_furnace_energy_cost ) * final_production[i] * energy_cost_to_CO2_emmission
+        PS_total_CO2_emmission.append(PS_CO2_emmission)
+
+    x_axis = CO2_emmission_data['时间'].tolist()
+
+    if request.method == 'GET':
+        LT_total_CO2_emmission = PS_total_CO2_emmission
+        bar = (
+            Bar(init_opts=opts.InitOpts(width="100%"))
+            .add_xaxis(x_axis)
+            .add_yaxis('BAU', BAU_total_CO2_emmission, label_opts=opts.LabelOpts(is_show=False))
+            .add_yaxis('PS', PS_total_CO2_emmission, label_opts=opts.LabelOpts(is_show=False))
+            .add_yaxis('LT', LT_total_CO2_emmission, label_opts=opts.LabelOpts(is_show=False))
+            .set_global_opts(
+                title_opts=opts.TitleOpts(title=f"碳排放量预测图",pos_left="center"),
+                yaxis_opts=opts.AxisOpts(name='碳排放量',axislabel_opts={"font_weight": "bold"}),
+                xaxis_opts=opts.AxisOpts(name='年份',axislabel_opts={'interval': 0,'rotate':0}),
+                datazoom_opts=[opts.DataZoomOpts(type_="slider"),opts.DataZoomOpts(type_="inside")],
+                legend_opts=opts.LegendOpts(pos_left='right', orient='vertical',item_width=10, item_height=15))
+        )
+
+        return render_template('CO2_pre.html', tech_names=tech_names, tech_details=tech_details, mybar=bar.render_embed()[:-2])
+
+    if request.method == 'POST':
+        if not request.form.getlist('tech_name'):
+            return render_template('CO2_pre.html', tech_names=tech_names, tech_details=tech_details)
+
+        LT_total_CO2_emmission = []
+        LT_elc_furnace_energy_cost = elc_furnace_energy_cost
+        LT_blast_furnace_energy_cost = blast_furnace_energy_cost
+        selected_tech_names = request.form.getlist('tech_name')
+        for i in range(len(final_production)):
+            for j in range(len(selected_tech_names)):
+                energy_saving_potential = data[data['技术名称'] == selected_tech_names[j]]['节能潜力'].values[0]
+                popularity_rate_0 = data[data['技术名称'] == selected_tech_names[j]]['普及率'].values[0]
+                popularity_rate_i = (popularity_rate_0 - 0.95) * math.exp(-i*i/414) + 0.95
+                if data[data['技术名称'] == selected_tech_names[j]]['高炉使用'].values[0] == 0:
+                    LT_elc_furnace_energy_cost -= energy_saving_potential * popularity_rate_i
+                else:
+                    LT_blast_furnace_energy_cost -= energy_saving_potential * popularity_rate_i
+            LS_CO2_emmssion = (LT_elc_furnace_energy_cost * elc_furnace_percent[i] + LT_blast_furnace_energy_cost * blast_furnace_percent[i]) * final_production[i] * energy_cost_to_CO2_emmission
+            LT_total_CO2_emmission.append(LS_CO2_emmssion)
+
+        bar = (
+            Bar(init_opts=opts.InitOpts(width="100%"))
+            .add_xaxis(x_axis)
+            .add_yaxis('BAU', BAU_total_CO2_emmission, label_opts=opts.LabelOpts(is_show=False))
+            .add_yaxis('PS', PS_total_CO2_emmission, label_opts=opts.LabelOpts(is_show=False))
+            .add_yaxis('LT', LT_total_CO2_emmission, label_opts=opts.LabelOpts(is_show=False))
+            .set_global_opts(
+                title_opts=opts.TitleOpts(title=f"碳排放量预测图",pos_left="center"),
+                yaxis_opts=opts.AxisOpts(name='碳排放量',axislabel_opts={"font_weight": "bold"}),
+                xaxis_opts=opts.AxisOpts(name='年份',axislabel_opts={'interval': 0,'rotate':0}),
+                datazoom_opts=[opts.DataZoomOpts(type_="slider"),opts.DataZoomOpts(type_="inside")],
+                legend_opts=opts.LegendOpts(pos_left='right', orient='vertical',item_width=10, item_height=15))
+        )
+
+        return render_template('CO2_pre.html', tech_names=tech_names, tech_details=tech_details, mybar=bar.render_embed()[:-2])
