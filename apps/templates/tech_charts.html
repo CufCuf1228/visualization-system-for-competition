@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>钢铁生产流程</title>
+    <title>钢铁"极致能效"数字化系统</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="static/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="static/vendors/base/vendor.bundle.base.css">
@@ -36,7 +36,7 @@
             <div class="navbar-menu-wrapper d-flex align-items-center ">
                 <ul class="navbar-nav mr-lg-4 w-100">
                     <span
-                        style="display: block; margin: 0 auto; text-align: center; color: black; font-size: 20px; letter-spacing: 4px;">基于多源数据的钢铁生产减排优化研究</span>
+                    style="display: block; margin: 0 auto; text-align: center; color: black; font-size: 20px; letter-spacing: 4px;">基于多源数据的钢铁“极致能效”数字化系统</span>
                 </ul>
             </div>
         </nav>
@@ -151,7 +151,7 @@
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="row">
-                        <div class="col-lg-6 stretch-card">
+                        <div class="col-lg-6 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
                                     <form action="{{ url_for('charts.tech_charts') }}" method="post" id="myForm">
@@ -213,20 +213,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 stretch-card">
+                        <div class="col-lg-6 grid-margin stretch-card">
                             <div class="card" id="tab">
                                 <style>
                                     .my-table {
                                         border-collapse: collapse;
                                         /* 合并边框 */
-                                        width: 50vh;
                                     }
 
                                     .my-table th,
                                     .my-table td {
                                         border: 1px solid #ddd;
                                         /* 设置内边框和外边框 */
-                                        padding: 8px;
+                                        padding: 5px;
                                         text-align: center;
                                         /* 设置数据居中 */
                                     }
@@ -243,22 +242,14 @@
 
                                     .my-table td:first-child,
                                     .my-table th:first-child {
-                                        width: 15vh;
+                                        width: 15%;
                                         /* 设置第一列的宽度 */
                                     }
-
-                                    .table-container2 {
-                                        overflow: auto;
-                                        height: 85vh;
-                                        width: 80vh;
-                                    }
                                 </style>
-                                <div class="table-container2">
-                                    <script type="text/javascript">
-                                        var tab = echarts.init(document.getElementById('tab'));
-                                        tab.setOption({{ mytab | safe }});
-                                    </script>
-                                </div>
+                                <script type="text/javascript">
+                                    var tab = echarts.init(document.getElementById('tab'));
+                                    tab.setOption({{ mytab | safe }});
+                                </script>
                             </div>
                         </div>
                     </div>
